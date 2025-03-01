@@ -8,9 +8,8 @@ public class MagneticBlock : MonoBehaviour
 {
     GameObject Player;
     PlayerController PlayerStats;
-    public ScriptableStats OriginalStarts;
     private ParticleSystem particleSystem;
-
+    float originalJumpPower;
     public enum BlockType
     {
         North, South, JumpBoost, SpeedBoost, Floating
@@ -24,8 +23,8 @@ public class MagneticBlock : MonoBehaviour
         {
             case BlockType.JumpBoost:
                 particleSystem.Play();
-                RevertJumpBoost(PlayerStats._stats.JumpPower, 3f);
-                PlayerStats._stats.JumpPower = 36;
+                StartCoroutine(RevertJumpBoost(originalJumpPower, 3f));
+                PlayerStats._stats.JumpPower = originalJumpPower*1.8f;
                 break;
             case BlockType.SpeedBoost:
                 gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
@@ -44,6 +43,7 @@ public class MagneticBlock : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         PlayerStats._stats.JumpPower = originalJumpPower;
+        print($"Power set to: {originalJumpPower}");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -94,7 +94,7 @@ public class MagneticBlock : MonoBehaviour
         particleSystem = GetComponentInChildren<ParticleSystem>();
         Player = GameObject.FindWithTag("Player");
         PlayerStats = Player.GetComponent<PlayerController>();
-            
+        originalJumpPower = PlayerStats._stats.JumpPower;
     }
 
     // Update is called once per frame
