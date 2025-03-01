@@ -36,7 +36,7 @@ namespace TarodevController
         public float GrounderDistance = 0.05f;
 
         [Header("JUMP")] [Tooltip("The immediate velocity applied when jumping")]
-        public float JumpPower = 36;
+        public float JumpPower = 18;
 
         [Tooltip("The maximum vertical movement speed")]
         public float MaxFallSpeed = 40;

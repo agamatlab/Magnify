@@ -64,6 +64,24 @@ public class MagneticBlock : MonoBehaviour
         }
     }
 
+    public Color GetColor(BlockType type)
+    {
+        switch (type)
+        {
+            case BlockType.North:
+                return Color.blue;
+            case BlockType.South:
+                return  Color.red;
+            case BlockType.JumpBoost:
+                return Color.green;
+            case BlockType.SpeedBoost:
+                return Color.blue;
+            case BlockType.Floating:
+                return Color.cyan;
+            default:
+                return Color.black;
+        }
+    }
     void SetColor()
     {
         switch (type)
