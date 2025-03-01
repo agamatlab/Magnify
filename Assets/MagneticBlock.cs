@@ -64,7 +64,7 @@ public class MagneticBlock : MonoBehaviour
         }
     }
 
-    public Color GetColor(BlockType type)
+    static public Color GetColor(BlockType type)
     {
         switch (type)
         {
@@ -82,27 +82,11 @@ public class MagneticBlock : MonoBehaviour
                 return Color.black;
         }
     }
+
+
     void SetColor()
     {
-        switch (type)
-        {
-            case BlockType.North:
-                gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-                break;
-            case BlockType.South:
-                gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-                break;
-            case BlockType.JumpBoost:
-                particleSystem.startColor = Color.green;
-                gameObject.GetComponent<SpriteRenderer>().color = Color.green;
-                break;
-            case BlockType.SpeedBoost:
-                gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-                break;
-            case BlockType.Floating:
-                gameObject.GetComponent<SpriteRenderer>().color = Color.cyan;
-                break;
-        }
+        gameObject.GetComponent<SpriteRenderer>().color = GetColor(type);
     }
     // Start is called before the first frame update
     void Start()
