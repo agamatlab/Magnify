@@ -12,7 +12,7 @@ namespace TarodevController
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class PlayerController : MonoBehaviour, IPlayerController
     {
-        [SerializeField] private ScriptableStats _stats;
+        [SerializeField] public ScriptableStats _stats;
         private Rigidbody2D _rb;
         private CapsuleCollider2D _col;
         private FrameInput _frameInput;

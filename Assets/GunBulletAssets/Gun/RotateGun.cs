@@ -51,9 +51,7 @@ public class AlignToCursor : MonoBehaviour
 
         // Calculate the angle and apply it to the object
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        print(angle);
 
-        print($"{Mathf.Cos(angle * Mathf.Deg2Rad)} * {radius} + {initParentPosition.x}, {Mathf.Sin(angle * Mathf.Deg2Rad)} * {radius}");
         float changeX= Mathf.Cos(angle * Mathf.Deg2Rad), changeY = Mathf.Sin(angle * Mathf.Deg2Rad);
         transform.localPosition = new Vector2(changeX * radius + initParentPosition.x, changeY * radius);
 
