@@ -6,6 +6,7 @@ using UnityEngine;
 public class FollowerBlock : MonoBehaviour
 {
     int chosenBlock = 0;
+    [SerializeField] GameObject magneticBlock;
     MagneticBlock.BlockType blockType;
     MagneticBlock.BlockType[] blockTypes = {
         MagneticBlock.BlockType.North,
@@ -52,6 +53,9 @@ public class FollowerBlock : MonoBehaviour
             transform.position = mousePosition;
             if (Input.GetKeyUp(KeyCode.Mouse0))
             {
+                var block = Instantiate(magneticBlock);
+                block.transform.position = transform.position;
+                block.GetComponent<MagneticBlock>().type = blockTypes[chosenBlock - 1];
                 chosenBlock = 0;
                 rc().enabled = false;
             }
