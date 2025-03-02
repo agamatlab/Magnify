@@ -5,9 +5,11 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
 
-    Vector2 FirstPosition = new Vector2(0,0);
+    Vector3 FirstPosition = new Vector3(0,0,-10);
     public Transform SecondPosition, ThirdPosition;
     GameObject Player;
+    bool MovementStarted = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,17 +18,31 @@ public class CameraMovement : MonoBehaviour
 
     public void MoveCamera(Vector3 targetPosition)
     {
-        LeanTween.move(gameObject, targetPosition, 5f)
+        MovementStarted= true;
+        
+        LeanTween.move(gameObject, targetPosition, 1f)
             .setEase(LeanTweenType.easeInOutQuad)
-            .setOnComplete(() => Debug.Log("Camera movement completed"));
+            .setOnComplete(() => { MovementStarted = false; });
     }
+
 
     // Update is called once per frame
     void Update()
     {
-        if(Player.transform.position.x > 9.7f)
+        if (MovementStarted) return; ;
+        if(Player.transform.position.x < 9.7f)
         {
-            MoveCamera(SecondPosition.transform.position);
+            if(gameObject.transform.position.x == SecondPosition.transform.position.x || gameObject.transform.position.x == ThirdPosition.transform.position.x)
+            {
+                MoveCamera(FirstPosition);
+            }
+        }
+        else if(Player.transform.position.x > 9.7f)
+        {
+            if(FirstPosition.x == gameObject.transform.position.x|| gameObject.transform.position.x == ThirdPosition.transform.position.x)
+            {
+                MoveCamera(SecondPosition.transform.position);
+            }
         }
         
         
