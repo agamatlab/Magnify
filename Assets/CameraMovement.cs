@@ -13,6 +13,9 @@ public class CameraMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject mask = GameObject.FindGameObjectWithTag("Mask");
+        LeanTween.scale(mask, new Vector3(40, 40, 40), 1f)
+            .setEase(LeanTweenType.easeInOutQuad);
         Player = GameObject.FindGameObjectWithTag("Player");
     }
 
