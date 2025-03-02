@@ -39,42 +39,50 @@ public class FollowerBlock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(chosenBlock==0)
+        RespondToButtons();
+        if (chosenBlock != 0)
         {
-            if (Input.GetKeyUp("1"))
-            {
-                ChooseBlock(1);
-            }
-            if (Input.GetKeyUp("2"))
-            {
-                ChooseBlock(2);
-            }
-            if (Input.GetKeyUp("3"))
-            {
-                ChooseBlock(3);
-            }
-        } else
-        {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 0;
-            Vector3 playerPosition = player.transform.position + (float) 0.5 * Vector3.up;
-            Vector3 delta = mousePosition - playerPosition;
-            float magnitude = delta.magnitude;
+            RespondToMouse();
+        }
+    }
 
-            if (delta.magnitude > newBlockRange)
-            {
-                mousePosition = playerPosition + delta.normalized * newBlockRange;
-            }
-            mousePosition.z = Camera.main.transform.position.z + Camera.main.nearClipPlane;
-            transform.position = mousePosition;
-            if (Input.GetKeyUp(KeyCode.Mouse0) && !isColliding)
-            {
-                var block = Instantiate(magneticBlock);
-                block.transform.position = transform.position;
-                block.GetComponent<MagneticBlock>().type = blockTypes[chosenBlock - 1];
-                chosenBlock = 0;
-                rc.enabled = false;
-            }
+    private void RespondToMouse()
+    {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0;
+        Vector3 playerPosition = player.transform.position + (float)0.5 * Vector3.up;
+        Vector3 delta = mousePosition - playerPosition;
+        float magnitude = delta.magnitude;
+
+        if (delta.magnitude > newBlockRange)
+        {
+            mousePosition = playerPosition + delta.normalized * newBlockRange;
+        }
+        mousePosition.z = Camera.main.transform.position.z + Camera.main.nearClipPlane;
+        transform.position = mousePosition;
+        if (Input.GetKeyUp(KeyCode.Mouse0) && !isColliding)
+        {
+            var block = Instantiate(magneticBlock);
+            block.transform.position = transform.position;
+            block.GetComponent<MagneticBlock>().type = blockTypes[chosenBlock - 1];
+            chosenBlock = 0;
+            rc.enabled = false;
+        }
+    }
+
+    private void RespondToButtons()
+    {
+        if (Input.GetKeyUp("1"))
+        {
+            ChooseBlock(1);
+        }
+        if (Input.GetKeyUp("2"))
+        {
+            ChooseBlock(2);
+        }
+        if (Input.GetKeyUp("3"))
+        {
+            ChooseBlock(3);
         }
     }
 
