@@ -5,13 +5,17 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private GameObject spawnPoint;
+    private ParticleSystem particleSystem;
 
+    public void PlayParticle()
+    {
+        particleSystem.Play();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        particleSystem = GetComponentInChildren<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -20,7 +24,6 @@ public class Player : MonoBehaviour
 
         if(transform.position.y< -10)
         {
-            transform.position = spawnPoint.transform.position;
         }
         
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
 
-    Vector3 FirstPosition = new Vector3(0,0,-10);
+    public Vector3 FirstPosition = new Vector3(0,0,-10);
     public Transform SecondPosition, ThirdPosition;
     GameObject Player;
     bool MovementStarted = false;
@@ -13,6 +13,9 @@ public class CameraMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject mask = GameObject.FindGameObjectWithTag("Mask");
+        LeanTween.scale(mask, new Vector3(40, 40, 40), 1f)
+            .setEase(LeanTweenType.easeInOutQuad);
         Player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -44,7 +47,14 @@ public class CameraMovement : MonoBehaviour
                 MoveCamera(SecondPosition.transform.position);
             }
         }
-        
-        
+        else if (Player.transform.position.x > 28.5f)
+        {
+            if (FirstPosition.x == gameObject.transform.position.x || gameObject.transform.position.x == SecondPosition.transform.position.x)
+            {
+                MoveCamera(ThirdPosition.transform.position);
+            }
+        }
+
+
     }
 }
