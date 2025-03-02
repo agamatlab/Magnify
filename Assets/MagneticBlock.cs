@@ -19,6 +19,12 @@ public class MagneticBlock : MonoBehaviour
     float originalAcceleration;
     bool isJumpBoosted = false;
     bool isSpeedBoosted = false;
+
+    public Sprite FloatingSprite;
+    public Sprite JumpSprite;
+    public Sprite SpeedSprite;
+
+
     public enum BlockType
     {
         North, South, JumpBoost, SpeedBoost, Floating

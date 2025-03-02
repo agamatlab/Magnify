@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -32,28 +33,39 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (MovementStarted) return; ;
+        print(Player.transform.position.x);
+        
+        if (MovementStarted) return;
         if(Player.transform.position.x < 9.7f)
         {
             if(gameObject.transform.position.x == SecondPosition.transform.position.x || gameObject.transform.position.x == ThirdPosition.transform.position.x)
             {
+                print("here 1");
                 MoveCamera(FirstPosition);
             }
         }
-        else if(Player.transform.position.x > 9.7f)
+        else if(Player.transform.position.x > 9.7f && Player.transform.position.x <= 28.5f)
         {
             if(FirstPosition.x == gameObject.transform.position.x|| gameObject.transform.position.x == ThirdPosition.transform.position.x)
             {
+                print("here 2");
                 MoveCamera(SecondPosition.transform.position);
             }
         }
         else if (Player.transform.position.x > 28.5f)
         {
+            print("here 3");
             if (FirstPosition.x == gameObject.transform.position.x || gameObject.transform.position.x == SecondPosition.transform.position.x)
             {
                 MoveCamera(ThirdPosition.transform.position);
             }
         }
+        
+        if(Player.transform.position.x > 55f)
+        {
+            SceneManager.LoadScene("Level 2");
+        }
+
 
 
     }

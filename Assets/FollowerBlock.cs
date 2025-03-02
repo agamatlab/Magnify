@@ -13,6 +13,10 @@ public class FollowerBlock : MonoBehaviour
     [SerializeField] float newBlockRange;
     [SerializeField] Image[] inventoryImages;
 
+    public Sprite JumpBoostSprite;
+    public Sprite SpeedBoostSprite;
+    public Sprite FloatingSprite;
+
     MagneticBlock.BlockType blockType;
     MagneticBlock.BlockType[] blockTypes = {
         MagneticBlock.BlockType.JumpBoost,
@@ -53,6 +57,25 @@ public class FollowerBlock : MonoBehaviour
         RespondToButtons();
         if (chosenBlock != 0)
         {
+            switch (blockTypes[chosenBlock-1])
+            {
+                case MagneticBlock.BlockType.North:
+                    break;
+                case MagneticBlock.BlockType.South:
+                    break;
+                case MagneticBlock.BlockType.JumpBoost:
+                    gameObject.GetComponent<SpriteRenderer>().sprite = JumpBoostSprite;
+
+                    break;
+                case MagneticBlock.BlockType.SpeedBoost:
+                    gameObject.GetComponent<SpriteRenderer>().sprite = SpeedBoostSprite;
+                    break;
+                case MagneticBlock.BlockType.Floating:
+                    gameObject.GetComponent<SpriteRenderer>().sprite = FloatingSprite;
+                    break;
+                default:
+                    break;
+            }
             RespondToMouse();
         }
     }
@@ -74,10 +97,31 @@ public class FollowerBlock : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Mouse0) && !isColliding)
         {
             var block = Instantiate(magneticBlock);
+            var sr = block.GetComponent<SpriteRenderer>();
+
+            switch (blockTypes[chosenBlock - 1])
+            {
+                case MagneticBlock.BlockType.North:
+                    break;
+                case MagneticBlock.BlockType.South:
+                    break;
+                case MagneticBlock.BlockType.JumpBoost:
+                    sr.sprite = JumpBoostSprite;
+                    break;
+                case MagneticBlock.BlockType.SpeedBoost:
+                    sr.sprite = SpeedBoostSprite;
+                    break;
+                case MagneticBlock.BlockType.Floating:
+                    sr.sprite = FloatingSprite;
+                    break;
+                default:
+                    break;
+            }
+
             block.transform.position = transform.position;
             block.GetComponent<MagneticBlock>().type = blockTypes[chosenBlock - 1];
-            placedBlocks[chosenBlock - 1] = true; // Mark block as placed
-            inventoryImages[chosenBlock - 1].gameObject.SetActive(false);
+            //placedBlocks[chosenBlock - 1] = true; // Mark block as placed
+            //inventoryImages[chosenBlock - 1].gameObject.SetActive(false);
             ChooseBlock(0);
         }
     }
