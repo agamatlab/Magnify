@@ -40,6 +40,9 @@ public class Laser : MonoBehaviour
             {
                 if (hit.collider.tag == "Player" && !reload)
                 {
+                    hit.collider.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                    hit.collider.gameObject.GetComponent<Player>().PlayParticle();
+                    LeanTween.scale(hit.collider.gameObject, new Vector3(0, 0, 0), .5f);
                     reload = true;
                     GameObject mask = GameObject.FindGameObjectWithTag("Mask");
                     LeanTween.scale(mask, new Vector3(0, 0, 0), 0.5f);
