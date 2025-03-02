@@ -47,7 +47,6 @@ public class MagneticBlock : MonoBehaviour
                     PlayerStats._stats.MaxSpeed = originalMaxSpeed * speedFactor;
                     PlayerStats._stats.Acceleration *= originalAcceleration * speedFactor;
                 }
-                PlayerStats._stats.Acceleration *= speedFactor;
                 break;
             case BlockType.Floating:
                 gameObject.GetComponent<SpriteRenderer>().color = Color.cyan;
@@ -63,6 +62,7 @@ public class MagneticBlock : MonoBehaviour
     {
         yield return new WaitForSeconds(timeToRevert);
         PlayerStats._stats.JumpPower = originalJumpPower;
+        isJumpBoosted = false;
     }
 
     private IEnumerator RevertSpeedBoost()

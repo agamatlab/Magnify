@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Magnetic Block
   - Enemy
+  - Mirror
+  - Mask
   layers:
   - Default
   - TransparentFX
@@ -14,7 +16,7 @@ TagManager:
   - Water
   - UI
   - 
-  - 
+  - Platform
   - 
   - 
   - 
