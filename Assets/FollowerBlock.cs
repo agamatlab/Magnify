@@ -13,9 +13,9 @@ public class FollowerBlock : MonoBehaviour
 
     MagneticBlock.BlockType blockType;
     MagneticBlock.BlockType[] blockTypes = {
-        MagneticBlock.BlockType.North,
-        MagneticBlock.BlockType.South,
-        MagneticBlock.BlockType.JumpBoost
+        MagneticBlock.BlockType.JumpBoost,
+        MagneticBlock.BlockType.SpeedBoost,
+        MagneticBlock.BlockType.Floating
     };
 
     Renderer rc => GetComponent<Renderer>();
@@ -31,9 +31,17 @@ public class FollowerBlock : MonoBehaviour
     }
 
     void ChooseBlock(int blockId) {
+        blockId = (chosenBlock == blockId) ? 0 : blockId;
         chosenBlock = blockId;
-        rc.enabled = true;
-        rc.material.color = MagneticBlock.GetColor(blockTypes[blockId - 1]);
+        if (blockId == 0)
+        {
+            rc.enabled = false;
+            return;
+        } else
+        {
+            rc.enabled = true;
+            rc.material.color = MagneticBlock.GetColor(blockTypes[blockId - 1]);
+        }
     }
 
     // Update is called once per frame
@@ -65,8 +73,7 @@ public class FollowerBlock : MonoBehaviour
             var block = Instantiate(magneticBlock);
             block.transform.position = transform.position;
             block.GetComponent<MagneticBlock>().type = blockTypes[chosenBlock - 1];
-            chosenBlock = 0;
-            rc.enabled = false;
+            ChooseBlock(0);
         }
     }
 
