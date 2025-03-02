@@ -158,6 +158,7 @@ public class MagneticBlock : MonoBehaviour
         SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         if (sprite != null)
         {
+
             print("really setting sprite");
             spriteRenderer.sprite = sprite;
         }
