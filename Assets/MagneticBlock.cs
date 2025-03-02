@@ -98,7 +98,7 @@ public class MagneticBlock : MonoBehaviour
             case BlockType.North:
                 return Color.blue;
             case BlockType.South:
-                return  Color.red;
+                return Color.red;
             case BlockType.JumpBoost:
                 return Color.green;
             case BlockType.SpeedBoost:
@@ -110,11 +110,26 @@ public class MagneticBlock : MonoBehaviour
         }
     }
 
+    static public Sprite GetSprite(BlockType type) {
+        switch (type) {
+            case BlockType.JumpBoost:
+                return Resources.Load<Sprite>("boost jump");
+                break;
+            case BlockType.SpeedBoost:
+                return Resources.Load<Sprite>("boost speed");
+                break;
+            case BlockType.Floating:
+                return Resources.Load<Sprite>("boost float");
+            default:
+                return null;
+        };
+    }
 
     void SetColor()
     {
-        gameObject.GetComponent<SpriteRenderer>().color = GetColor(type);
+//        gameObject.GetComponent<SpriteRenderer>().color = GetColor(type);
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -132,6 +147,13 @@ public class MagneticBlock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SetColor();
+        var sprite = GetSprite(type);
+        print("the sprite is" + sprite.ToShortString());
+        SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        if (sprite != null)
+        {
+            print("really setting sprite");
+            spriteRenderer.sprite = sprite;
+        }
     }
 }
