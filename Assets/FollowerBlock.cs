@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FollowerBlock : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class FollowerBlock : MonoBehaviour
 
     [SerializeField] GameObject magneticBlock;
     [SerializeField] float newBlockRange;
+    [SerializeField] Image[] inventoryImages;
 
     MagneticBlock.BlockType blockType;
     MagneticBlock.BlockType[] blockTypes = {
@@ -22,6 +24,7 @@ public class FollowerBlock : MonoBehaviour
     BoxCollider2D bc => GetComponent<BoxCollider2D>();
     private static GameObject player => GameObject.FindWithTag("Player");
     List<BoxCollider2D> collidingWith = new List<BoxCollider2D>();
+    bool[] placedBlocks = new bool[3];
 
 
     // Start is called before the first frame update
@@ -73,6 +76,8 @@ public class FollowerBlock : MonoBehaviour
             var block = Instantiate(magneticBlock);
             block.transform.position = transform.position;
             block.GetComponent<MagneticBlock>().type = blockTypes[chosenBlock - 1];
+            placedBlocks[chosenBlock - 1] = true; // Mark block as placed
+            inventoryImages[chosenBlock - 1].gameObject.SetActive(false);
             ChooseBlock(0);
         }
     }
