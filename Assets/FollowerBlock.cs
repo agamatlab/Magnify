@@ -13,9 +13,9 @@ public class FollowerBlock : MonoBehaviour
 
     MagneticBlock.BlockType blockType;
     MagneticBlock.BlockType[] blockTypes = {
-        MagneticBlock.BlockType.North,
-        MagneticBlock.BlockType.South,
-        MagneticBlock.BlockType.JumpBoost
+        MagneticBlock.BlockType.JumpBoost,
+        MagneticBlock.BlockType.SpeedBoost,
+        MagneticBlock.BlockType.Floating
     };
 
     Renderer rc => GetComponent<Renderer>();

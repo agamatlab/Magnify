@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TarodevController;
@@ -9,7 +10,15 @@ public class MagneticBlock : MonoBehaviour
     GameObject Player;
     PlayerController PlayerStats;
     private ParticleSystem particleSystem;
+    [SerializeField] float timeToRevert = 3;
+    [SerializeField] float speedFactor = 3;
+    [SerializeField] float jumpFactor = 1.8f;
+
     float originalJumpPower;
+    float originalMaxSpeed;
+    float originalAcceleration;
+    bool isJumpBoosted = false;
+    bool isSpeedBoosted = false;
     public enum BlockType
     {
         North, South, JumpBoost, SpeedBoost, Floating
@@ -22,12 +31,23 @@ public class MagneticBlock : MonoBehaviour
         switch (type)
         {
             case BlockType.JumpBoost:
-                particleSystem.Play();
-                StartCoroutine(RevertJumpBoost(originalJumpPower, 3f));
-                PlayerStats._stats.JumpPower = originalJumpPower*1.8f;
+                if(!isJumpBoosted)
+                {
+                    isJumpBoosted = true;
+                    particleSystem.Play();
+                    StartCoroutine(RevertJumpBoost());
+                    PlayerStats._stats.JumpPower = originalJumpPower * jumpFactor;
+                }
                 break;
             case BlockType.SpeedBoost:
-                gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                if(!isSpeedBoosted)
+                {
+                    isSpeedBoosted = true;
+                    StartCoroutine(RevertSpeedBoost());
+                    PlayerStats._stats.MaxSpeed = originalMaxSpeed * speedFactor;
+                    PlayerStats._stats.Acceleration *= originalAcceleration * speedFactor;
+                }
+                PlayerStats._stats.Acceleration *= speedFactor;
                 break;
             case BlockType.Floating:
                 gameObject.GetComponent<SpriteRenderer>().color = Color.cyan;
@@ -39,11 +59,18 @@ public class MagneticBlock : MonoBehaviour
 
 
 
-    private IEnumerator RevertJumpBoost(float originalJumpPower, float delay)
+    private IEnumerator RevertJumpBoost()
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(timeToRevert);
         PlayerStats._stats.JumpPower = originalJumpPower;
-        print($"Power set to: {originalJumpPower}");
+    }
+
+    private IEnumerator RevertSpeedBoost()
+    {
+        yield return new WaitForSeconds(timeToRevert);
+        PlayerStats._stats.MaxSpeed = originalMaxSpeed;
+        PlayerStats._stats.Acceleration = originalAcceleration;
+        isSpeedBoosted = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -95,6 +122,8 @@ public class MagneticBlock : MonoBehaviour
         Player = GameObject.FindWithTag("Player");
         PlayerStats = Player.GetComponent<PlayerController>();
         originalJumpPower = PlayerStats._stats.JumpPower;
+        originalMaxSpeed = PlayerStats._stats.MaxSpeed;
+        originalAcceleration = PlayerStats._stats.Acceleration;
     }
 
     // Update is called once per frame
