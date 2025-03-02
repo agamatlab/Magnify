@@ -104,7 +104,7 @@ public class MagneticBlock : MonoBehaviour
             case BlockType.SpeedBoost:
                 return Color.blue;
             case BlockType.Floating:
-                return Color.cyan;
+                return Color.yellow;
             default:
                 return Color.black;
         }
