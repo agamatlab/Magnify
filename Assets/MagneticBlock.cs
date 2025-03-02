@@ -124,12 +124,14 @@ public class MagneticBlock : MonoBehaviour
         originalJumpPower = PlayerStats._stats.JumpPower;
         originalMaxSpeed = PlayerStats._stats.MaxSpeed;
         originalAcceleration = PlayerStats._stats.Acceleration;
+        if (type == BlockType.Floating) {
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         SetColor();
-        
     }
 }
